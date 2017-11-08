@@ -6,28 +6,28 @@ var config = {
   storageBucket: '<your-storage-bucket>'
 };
 firebase.initializeApp(config);
-    
+
 $(document).ready(function() {
-	var database = firebase.database();
-  
-	$('#message-form').submit(function(event) {
-		// by default a form submit reloads the DOM which will subsequently reload all our JS
-		// to avoid this we preventDefault()
-		event.preventDefault();
+  var database = firebase.database();
 
-		// grab user message input
-		var message = $('#message').val();
+  $('#message-form').submit(function(event) {
+    // by default a form submit reloads the DOM which will subsequently reload all our JS
+    // to avoid this we preventDefault()
+    event.preventDefault();
 
-		// clear message input (for UX purposes)
-		$('#message').val('');
+    // grab user message input
+    var message = $('#message').val();
 
-		// create a section for messages data in your db
-		var messagesReference = database.ref('messages');
+    // clear message input (for UX purposes)
+    $('#message').val('');
 
-		// use the set method to save data to the messages
-		messagesReference.push({
-			message: message,
-			votes: 0
-		});
-	});
+    // create a section for messages data in your db
+    var messagesReference = database.ref('messages');
+
+    // use the set method to save data to the messages
+    messagesReference.push({
+      message: message,
+      votes: 0
+    });
+  });
 });
