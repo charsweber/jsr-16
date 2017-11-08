@@ -10,6 +10,9 @@ firebase.initializeApp(config);
 $(document).ready(function() {
   var database = firebase.database();
 
+
+  // CREATE
+
   $('#message-form').submit(function(event) {
     // by default a form submit reloads the DOM which will subsequently reload all our JS
     // to avoid this we preventDefault()
@@ -30,4 +33,15 @@ $(document).ready(function() {
       votes: 0
     });
   });
+
+  // READ
+  function getFanMessages() {
+
+    // use reference to app database to listen for changes in messages data
+    // hint: use something referring to 'value'
+
+      // iterate through results coming from database call; messages
+
+        // bind the results to the DOM
+  }
 });
