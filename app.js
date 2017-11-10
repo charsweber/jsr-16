@@ -1,9 +1,11 @@
 // Initialize Firebase
 var config = {
-  apiKey: '<your-api-key>',
-  authDomain: '<your-auth-domain>',
-  databaseURL: '<your-database-url>',
-  storageBucket: '<your-storage-bucket>'
+  apiKey: "AIzaSyDpjvG0Ux16WuRAd3p9yFj6deVHAMBTOgE",
+  authDomain: "jsr911-charlie.firebaseapp.com",
+  databaseURL: "https://jsr911-charlie.firebaseio.com",
+  projectId: "jsr911-charlie",
+  storageBucket: "jsr911-charlie.appspot.com",
+  messagingSenderId: "378513110540"
 };
 firebase.initializeApp(config);
 
@@ -11,13 +13,13 @@ $(document).ready(function() {
   var database = firebase.database();
 
 
-  // CREATE
+  // STEP 1: CREATE
 
   $('#message-form').submit(function(event) {
     // by default a form submit reloads the DOM which will subsequently reload all our JS
     // to avoid this we preventDefault()
     event.preventDefault();
-
+    $('.message-board').empty();
     // grab user message input
     var message = $('#message').val();
 
@@ -32,16 +34,67 @@ $(document).ready(function() {
       message: message,
       votes: 0
     });
+
+    
   });
 
+  $('#artist-form').submit(function(event) {
+    event.preventDefault();
+    var newArtist = $('#new-artist').val();
+    $('#new-artist').val('');
+    var artistNames = database.ref('artists');
+    $('h1').html(newArtist);
+    artistNames.push({
+      artists: newArtist
+    });
+  });
+
+getFanMessages();
+getArtist();
   // READ
   function getFanMessages() {
 
     // use reference to app database to listen for changes in messages data
     // hint: use something referring to 'value'
 
-      // iterate through results coming from database call; messages
+    var messagesReference = database.ref('messages');
 
+    messagesReference.on('value', function(results) {
+
+      var allMessages = results.val();
+    // iterate through results coming from database call; messages
+      var $messageBoard = $('.message-board');
+      for (var comment in allMessages) {
         // bind the results to the DOM
+        var $li = $('<li></li>');
+        $li.html(allMessages[comment].message);
+        $messageBoard.append($li);
+      }
+
+    });       
+  }
+
+  function getArtist() {
+    var artistNames = database.ref('artists');
+    artistNames.on('value', function(results) {
+      var allArtists = results.val();
+      console.log(allArtists);
+      var lastArtist = allArtists[Object.keys(allArtists)[Object.keys(allArtists).length - 1]];
+      console.log(lastArtist.artists);
+      $('h1').html(lastArtist.artists);
+    })
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
