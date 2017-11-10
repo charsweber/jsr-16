@@ -1,12 +1,6 @@
 // Initialize Firebase
-var config = {
-  apiKey: "AIzaSyDpjvG0Ux16WuRAd3p9yFj6deVHAMBTOgE",
-  authDomain: "jsr911-charlie.firebaseapp.com",
-  databaseURL: "https://jsr911-charlie.firebaseio.com",
-  projectId: "jsr911-charlie",
-  storageBucket: "jsr911-charlie.appspot.com",
-  messagingSenderId: "378513110540"
-};
+// add config
+
 firebase.initializeApp(config);
 
 $(document).ready(function() {
